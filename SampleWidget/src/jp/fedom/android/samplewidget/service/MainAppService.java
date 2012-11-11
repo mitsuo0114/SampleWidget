@@ -80,6 +80,14 @@ public class MainAppService extends Service {
 	public void onStart(Intent intent, int startId) {
 		Log.v("MainAppService", "onStart");
 		super.onStart(intent, startId);
+	}
+
+	/**
+	 * Called by the system every time a client explicitly starts the service by
+	 * calling startService(Intent), providing the arguments it supplied and a
+	 * unique integer token representing the start request.
+	 */
+	public int onStartCommand(Intent intent, int flags, int startId) {
 		Intent buttonIntent = new Intent();
 		buttonIntent.setAction(BUTTON_CLICK_ACTION);
 		PendingIntent pendingIntent = PendingIntent.getService(this, 0, buttonIntent, 0);
@@ -104,14 +112,6 @@ public class MainAppService extends Service {
 		ComponentName thisWidget = new ComponentName(this, MainAppWidget.class);
 		AppWidgetManager manager = AppWidgetManager.getInstance(this);
 		manager.updateAppWidget(thisWidget, remoteViews);
-	}
-
-	/**
-	 * Called by the system every time a client explicitly starts the service by
-	 * calling startService(Intent), providing the arguments it supplied and a
-	 * unique integer token representing the start request.
-	 */
-	public int onStartCommand(Intent intent, int flags, int startId) {
 		return super.onStartCommand(intent, flags, startId);
 	}
 
