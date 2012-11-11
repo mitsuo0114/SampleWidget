@@ -1,5 +1,6 @@
 package jp.fedom.android.samplewidget.widget;
 
+import jp.fedom.android.samplewidget.service.MainAppService;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
@@ -71,6 +72,9 @@ public class MainAppWidget extends AppWidgetProvider {
 			int[] appWidgetIds) {
 		Log.v("HelloAndroidWidget", "onUpdate");
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
+		
+		Intent intent = new Intent(context, MainAppService.class);
+		context.startService(intent);
 	}
 
 }

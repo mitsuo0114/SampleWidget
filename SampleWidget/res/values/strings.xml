@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">SampleWidget</string>
     <string name="hello">Hello world</string>
+    <string name="hello2">fine?</string>
+    <string name="hello3">ok!</string>
+    <string name="hello4">ok4!</string>
+    <string name="hello5">ok5!</string>
 </resources>

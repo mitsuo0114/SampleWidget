@@ -11,6 +11,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
+        <!--  widget -->
         <receiver
             android:name="jp.fedom.android.samplewidget.widget.MainAppWidget"
             android:label="@string/app_name" 
@@ -18,11 +20,20 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidgetinfo" />
         </receiver>
+
+        <!--  service list -->
+        <service 
+            android:name="jp.fedom.android.samplewidget.service.MainAppService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="BUTTON_CLICK_ACTION"/>
+                <action android:name="BUTTON_CLICK_ACTION2"/>
+                </intent-filter>
+         </service>
     </application>
 
 </manifest>
