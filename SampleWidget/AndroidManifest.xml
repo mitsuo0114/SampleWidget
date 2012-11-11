@@ -1,14 +1,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.fedom.android.samplewidget"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="15" />
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="15" />
 
-    <application android:label="@string/app_name"
+    <application
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/AppTheme">
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <receiver
+            android:name="jp.fedom.android.samplewidget.widget.MainAppWidget"
+            android:label="@string/app_name" 
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
 
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidgetinfo" />
+        </receiver>
     </application>
 
 </manifest>
