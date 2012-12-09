@@ -73,14 +73,14 @@ public class MainAppService extends Service {
 
 	}
 
-	/**
-	 * This method was deprecated in API level 5. Implement
-	 * onStartCommand(Intent, int, int) instead.
-	 */
-	public void onStart(Intent intent, int startId) {
-		Log.v("MainAppService", "onStart");
-		super.onStart(intent, startId);
-	}
+//	/**
+//	 * This method was deprecated in API level 5. Implement
+//	 * onStartCommand(Intent, int, int) instead.
+//	 */
+//	public void onStart(Intent intent, int startId) {
+//		Log.v("MainAppService", "onStart");
+//		super.onStart(intent, startId);
+//	}
 
 	/**
 	 * Called by the system every time a client explicitly starts the service by
@@ -100,12 +100,15 @@ public class MainAppService extends Service {
 		RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.widget);		
 		remoteViews.setOnClickPendingIntent(R.id.hello, pendingIntent);
 		remoteViews.setOnClickPendingIntent(R.id.hello2, pendingIntent2);
-		
-		if(BUTTON_CLICK_ACTION.equals(intent.getAction())){
-			(Toast.makeText(getApplicationContext(),"hello!", Toast.LENGTH_SHORT)).show();
-		}
-		if(BUTTON_CLICK_ACTION2.equals(intent.getAction())){
-			(Toast.makeText(getApplicationContext(),"hello2!", Toast.LENGTH_SHORT)).show();
+		if (intent != null) {
+			if (BUTTON_CLICK_ACTION.equals(intent.getAction())) {
+				(Toast.makeText(getApplicationContext(), "hello!",
+						Toast.LENGTH_SHORT)).show();
+			}
+			if (BUTTON_CLICK_ACTION2.equals(intent.getAction())) {
+				(Toast.makeText(getApplicationContext(), "hello2!",
+						Toast.LENGTH_SHORT)).show();
+			}
 		}
 
 		// update widget view
