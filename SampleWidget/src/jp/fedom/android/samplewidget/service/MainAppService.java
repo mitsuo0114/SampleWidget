@@ -1,21 +1,16 @@
 package jp.fedom.android.samplewidget.service;
 
-import jp.fedom.android.samplewidget.R;
-import jp.fedom.android.samplewidget.widget.MainAppWidget;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
 public class MainAppService extends Service {
-	private final String BUTTON_CLICK_ACTION = "BUTTON_CLICK_ACTION";
-	private final String BUTTON_CLICK_ACTION2 = "BUTTON_CLICK_ACTION2";
+	public static final String BUTTON_CLICK_ACTION = "BUTTON_CLICK_ACTION";
+	public static final String BUTTON_CLICK_ACTION2 = "BUTTON_CLICK_ACTION2";
+	private static final String TAG = "MainAppService";
 
 	/**
 	 * Return the communication channel to the service.
@@ -31,14 +26,14 @@ public class MainAppService extends Service {
 	 * component is running.
 	 */
 	public void onConfigurationChanged(Configuration newConfig) {
-		Log.v("MainAppService", "onConfigurationChanged");
 		super.onConfigurationChanged(newConfig);
+		Log.v("MainAppService", "onConfigurationChanged");
 	}
 
 	/** Called by the system when the service is first created. */
 	public void onCreate() {
-		Log.v("MainAppService", "onCreate");
 		super.onCreate();
+		Log.v("MainAppService", "onCreate");
 
 	}
 
@@ -47,8 +42,8 @@ public class MainAppService extends Service {
 	 * being removed.
 	 */
 	public void onDestroy() {
-		Log.v("MainAppService", "onDestroy");
 		super.onDestroy();
+		Log.v("MainAppService", "onDestroy");
 
 	}
 
@@ -57,8 +52,8 @@ public class MainAppService extends Service {
 	 * would like actively running process to try to tighten their belt.
 	 */
 	public void onLowMemory() {
-		Log.v("MainAppService", "onLowMemory");
 		super.onLowMemory();
+		Log.v("MainAppService", "onLowMemory");
 
 	}
 
@@ -68,8 +63,8 @@ public class MainAppService extends Service {
 	 * onUnbind(Intent).
 	 */
 	public void onRebind(Intent intent) {
-		Log.v("MainAppService", "onRebind");
 		super.onRebind(intent);
+		Log.v("MainAppService", "onRebind");
 
 	}
 
@@ -82,42 +77,29 @@ public class MainAppService extends Service {
 //		super.onStart(intent, startId);
 //	}
 
+	protected ServiceActionEvents getServiceActionEvents(){
+		return new ServiceActionEvents();
+	}
+
 	/**
 	 * Called by the system every time a client explicitly starts the service by
 	 * calling startService(Intent), providing the arguments it supplied and a
 	 * unique integer token representing the start request.
 	 */
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Intent buttonIntent = new Intent();
-		buttonIntent.setAction(BUTTON_CLICK_ACTION);
-		PendingIntent pendingIntent = PendingIntent.getService(this, 0, buttonIntent, 0);
-		
-		Intent buttonIntent2 = new Intent();
-		buttonIntent2.setAction(BUTTON_CLICK_ACTION2);
-		PendingIntent pendingIntent2 = PendingIntent.getService(this, 0, buttonIntent2, 0);
+		Log.v(TAG,"called onStartService");
 
-		
-		RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.widget);		
-		remoteViews.setOnClickPendingIntent(R.id.hello, pendingIntent);
-		remoteViews.setOnClickPendingIntent(R.id.hello2, pendingIntent2);
+		ServiceActionEvents event = getServiceActionEvents();
+
 		if (intent != null) {
 			if (BUTTON_CLICK_ACTION.equals(intent.getAction())) {
-				(Toast.makeText(getApplicationContext(), "hello!",
-						Toast.LENGTH_SHORT)).show();
-			}
-			if (BUTTON_CLICK_ACTION2.equals(intent.getAction())) {
-				(Toast.makeText(getApplicationContext(), "hello2!",
-						Toast.LENGTH_SHORT)).show();
+				event.showToast(this, "hello world!!", Toast.LENGTH_SHORT);
+			}else if (BUTTON_CLICK_ACTION2.equals(intent.getAction())) {
+				event.showToast(this, "Yes I'm fine!", Toast.LENGTH_SHORT);
 			}
 		}
-
-		// update widget view
-		ComponentName thisWidget = new ComponentName(this, MainAppWidget.class);
-		AppWidgetManager manager = AppWidgetManager.getInstance(this);
-		manager.updateAppWidget(thisWidget, remoteViews);
 		return super.onStartCommand(intent, flags, startId);
 	}
-
 	/**
 	 * This is called if the service is currently running and the user has
 	 * removed a task that comes from the service's application. api from 14
